@@ -7,21 +7,20 @@ import java.util.Map;
 public class Caeser {
 
     public static void main(String[] args) {
-        String text = "LaRs Er GaY!!!";
+        String text = "This text should be encrypted";
         int shift = 3;
         //OWN TEXT
-        //String cipherText = encryptAndDecrypt(text, shift, 0);
-        //System.out.println(encryptAndDecrypt(cipherText, shift, 1));
+        //String cipherText = encrypt(text, shift);
+        //System.out.println(decrypt(cipherText, shift));
 
         //BRUTEFORCE TEXT
         /*String bruteText = "rfwhzx mfw js txyj\n";
         bruteForce(bruteText);*/
 
         //SONG/LYRIC TEXT
-        //
         /*String song = usingBufferReader("songs/FadedSong.txt");
-        String lyrics = encryptAndDecrypt(song, shift, 1);
-        System.out.println(encryptAndDecrypt(lyrics, shift, 0));*/
+        String lyrics = decrypt(song, shift);
+        System.out.println(encrypt(lyrics, shift));*/
 
         //printLetterFrequenciesAsPercentages(song);
     }
@@ -55,28 +54,14 @@ public class Caeser {
         return text.toString();
     }
 
-    public static String encryptAndDecrypt(String text, int shift, int option) {
+    public static String encrypt(String text, int shift) {
         StringBuilder cipherText = new StringBuilder();
 
-        //ENCRYPT
         for (char character : text.toCharArray()) {
-            if (Character.isLetter(character) && option == 0) {
+            if (Character.isLetter(character)) {
                 char base = Character.isUpperCase(character) ? 'A' : 'a';
                 int oriAlphaPos = character - base;
                 int newAlphaPos = (oriAlphaPos + shift) % 26;
-
-                if (newAlphaPos < 0) {
-                    newAlphaPos += 26;
-                }
-
-                char newChar = (char) (base + newAlphaPos);
-                cipherText.append(newChar);
-            }
-            //DECRYPT
-            else if (Character.isLetter(character) && option == 1) {
-                char base = Character.isUpperCase(character) ? 'A' : 'a';
-                int oriAlphaPos = character - base;
-                int newAlphaPos = (oriAlphaPos - shift) % 26;
 
                 if (newAlphaPos < 0) {
                     newAlphaPos += 26;
@@ -92,11 +77,33 @@ public class Caeser {
         return cipherText.toString();
     }
 
+    public static String decrypt(String text, int shift) {
+        StringBuilder plainText = new StringBuilder();
+
+        for (char character : text.toCharArray()) {
+            if (Character.isLetter(character)) {
+                char base = Character.isUpperCase(character) ? 'A' : 'a';
+                int oriAlphaPos = character - base;
+                int newAlphaPos = (oriAlphaPos - shift) % 26;
+
+                if (newAlphaPos < 0) {
+                    newAlphaPos += 26;
+                }
+
+                char newChar = (char) (base + newAlphaPos);
+                plainText.append(newChar);
+            }
+            else {
+                plainText.append(character);
+            }
+        }
+        return plainText.toString();
+    }
+
     private static void bruteForce(String text) {
         int count = 26;
         for (int shift = 0; shift < count; shift++) {
-            //encryptAndDecrypt(text, shift, 1);
-            System.out.println("Shift " + shift + ": " + encryptAndDecrypt(text, shift, 1));
+            System.out.println("Shift " + shift + ": " + decrypt(text, shift));
         }
     }
 

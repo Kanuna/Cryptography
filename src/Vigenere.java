@@ -1,16 +1,11 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
 public class Vigenere {
     public static void main(String[] args) {
         String plainText = "HELLO";
         String keyWord = "JAVA";
 
         System.out.println("encrypt: " + encrypt(plainText, keyWord));
-        System.out.println("decrypt: " + decrypt(plainText, keyWord));
+        String encryptedText = encrypt(plainText, keyWord);
+        System.out.println("decrypt: " + decrypt(encryptedText, keyWord));
     }
 
     public static String encrypt(String plainText, String keyword) {
